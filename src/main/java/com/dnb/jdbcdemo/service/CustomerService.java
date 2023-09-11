@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.naming.InvalidNameException;
 
 import com.dnb.jdbcdemo.dto.Customer;
+import com.dnb.jdbcdemo.exceptions.IdNotFoundException;
 import com.dnb.jdbcdemo.exceptions.InvalidAddressException;
 import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
@@ -17,9 +18,8 @@ public interface CustomerService {
 	public Optional<Customer> getCustomerById(int customerId) throws InvalidNameException, InvalidCustomerIdException,
 			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException;
 
-	public List<Customer> getAllCustomers() throws InvalidNameException, InvalidCustomerIdException,
+	public Iterable<Customer> getAllCustomers() throws InvalidNameException, InvalidCustomerIdException,
 			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException;
 
-	public Optional<Customer> deleteCustomerById(int customerId) throws InvalidCustomerIdException, InvalidNameException,
-			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException;
+	public boolean deleteCustomerById(int customerId) throws InvalidCustomerIdException, InvalidNameException,InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException, IdNotFoundException;
 }

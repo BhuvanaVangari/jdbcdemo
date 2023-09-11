@@ -23,6 +23,7 @@ import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidDateException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 import com.dnb.jdbcdemo.service.AccountService;
+import com.dnb.jdbcdemo.service.CustomerService;
 
 @SpringBootApplication
 public class JdbcdemoApplication {
@@ -51,20 +52,24 @@ public class JdbcdemoApplication {
 
 		AccountService accountService = applicationContext.getBean(AccountService.class);
 
+		CustomerService customerService = applicationContext.getBean(CustomerService.class);
+
 		Account account2;
 
-		try {
-			account2 = new Account("aa025", "Bhuvana", "Savings", 60000, "9036462722", "Hyderabad", LocalDate.now(),
+		Customer customer;
 
-					LocalDate.of(2001, 12, 9), true,
-					(new Customer(2, "Booona", "8074376961", "Hyd", "BZKPV5188A", "702")));
+		try {
+			account2 = new Account("aa124", "Boon", "Salary", 60100, "9036422722", "Hyd", LocalDate.now(),
+					LocalDate.of(2001, 10, 22), 2);
+
+			customer = new Customer(1, "Bhuvana", "9087654321", "Hydd", "BBBBB5111A", "778899006655");
 			System.out.println(account2);
 			Scanner sc = new Scanner(System.in);
 
 			while (true) {
 
 				System.out.println(
-						"Enter your choice 1)Create account\n2)Get accountby ID\n3)Delete account by ID\n4)Get all accounts\n5)Exit\n");
+						"Enter your choice\n1)Create account\n2)Get accountby ID\n3)Delete account by ID\n4)Get all accounts\n5)Create Customer\n6)Get customer by ID\\n7)Delete customer by ID\n8)Get all customers\n9)Exit\n");
 
 				int str = sc.nextInt();
 
@@ -80,7 +85,7 @@ public class JdbcdemoApplication {
 
 					Optional<Account> acc;
 
-					acc = accountService.getAccountById("aa022");
+					acc = accountService.getAccountById("aa125");
 					System.out.println(acc != null);
 					break;
 
@@ -88,17 +93,46 @@ public class JdbcdemoApplication {
 
 				case 3: {
 
-					accountService.deleteAccountById("aa003");
+					accountService.deleteAccountById("aa125");
 					break;
 
 				}
 
-				case 4:
+				case 4: {
 
-					accountService.getAllAccounts();
+					accountService.getAllAccounts().forEach((name) -> System.out.println(name));
+					break;
+				}
+
+				case 5: {
+					customerService.createCustomer(customer);
+					break;
+				}
+				
+				case 6: {
+
+					Optional<Customer> cus;
+
+					cus = customerService.getCustomerById(1);
+					System.out.println(cus != null);
 					break;
 
-				case 5:
+				}
+
+				case 7: {
+
+					customerService.deleteCustomerById(1);
+					break;
+
+				}
+
+				case 8: {
+
+					customerService.getAllCustomers().forEach((name) -> System.out.println(name));
+					break;
+				}
+
+				case 9:
 					System.exit(0);
 
 				}
@@ -138,7 +172,6 @@ public class JdbcdemoApplication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 		/*
 		 * account2.setAccountId("sa003");

@@ -6,17 +6,18 @@ import java.util.Optional;
 import javax.naming.InvalidNameException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.dnb.jdbcdemo.dto.Customer;
+import com.dnb.jdbcdemo.exceptions.IdNotFoundException;
 import com.dnb.jdbcdemo.exceptions.InvalidAddressException;
 import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 import com.dnb.jdbcdemo.repo.CustomerRepository;
 
+@Service("customerServiceImpl")
 public class CustomerServiceImpl implements CustomerService {
-
-	private static CustomerService customerService = null;
 	
 	@Autowired
 	CustomerRepository customerRepository;
@@ -24,26 +25,35 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer createCustomer(Customer customer) {
 		// TODO Auto-generated method stub
-		return customerRepository.createCustomer(customer);
+		return customerRepository.save(customer);
 	}
 
 	@Override
 	public Optional<Customer> getCustomerById(int customerId) throws InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
 		// TODO Auto-generated method stub
-		return customerRepository.getCustomerById(customerId);
+		return customerRepository.findById(customerId);
 	}
 
 	@Override
-	public List<Customer> getAllCustomers() throws InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
+	public Iterable<Customer> getAllCustomers() throws InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
 		// TODO Auto-generated method stub
-		return customerRepository.getAllCustomers();
+		return customerRepository.findAll();
 	}
 
 	@Override
-	public Optional<Customer> deleteCustomerById(int customerId) throws InvalidCustomerIdException, InvalidNameException,
-			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
+	public boolean deleteCustomerById(int customerId) throws InvalidCustomerIdException, InvalidNameException,
+			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException,IdNotFoundException {
 		// TODO Auto-generated method stub
-		return customerRepository.deleteCustomerById(customerId);
+		if(customerRepository.existsById(customerId)) {
+			customerRepository.deleteById(customerId);
+			if(customerRepository.existsById(customerId)) {
+				return false;
+			}
+			return true;
+		}
+		else {
+			throw new IdNotFoundException("ID Not Found");
+		}
 	}
 
 }

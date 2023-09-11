@@ -14,6 +14,11 @@ import com.dnb.jdbcdemo.exceptions.InvalidBalanceException;
 import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidDateException;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,9 +29,11 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @ToString(exclude = "customer")
+@Entity
+
 public class Account {
 	public Account(String accountId, String accountHolderName, String accountType, float balance, String contactNumber,
-			String address, LocalDate accountCreatedDate, LocalDate dob, boolean accountStatus, Customer customer)
+			String address, LocalDate accountCreatedDate, LocalDate dob,  int customerId)
 			throws InvalidNameException, InvalidDateException, InvalidAccountIdException, InvalidAccountTypeException,
 			InvalidBalanceException, InvalidContactNumberException, InvalidAddressException,
 			InvalidAccountStatusException {
@@ -39,11 +46,12 @@ public class Account {
 		this.setAddress(address);
 		this.setAccountCreatedDate(accountCreatedDate);
 		this.setDob(dob);
-		this.setAccountStatus(accountStatus);
-		this.setCustomer(customer);
+		this.setCustomer(customerId);
 	}
 
+	@Id
 	private String accountId;
+	@Column(nullable = false)
 	private String accountHolderName;
 	private String accountType;
 	private float balance;
@@ -51,9 +59,9 @@ public class Account {
 	private String address;
 	private LocalDate accountCreatedDate = LocalDate.now();
 	private LocalDate dob;
+	@Transient
 	private boolean accountStatus;
-
-	private Customer customer;
+	private int customerId;
 
 	public void setAccountId(String accountId) throws InvalidAccountIdException {
 		String regex = "^[A-Za-z]{2}[0-9]{3}$";
@@ -154,8 +162,8 @@ public class Account {
 			throw new InvalidAccountStatusException("Account Status is invalid");
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomer(int customerId) {
+		this.customerId = customerId;
 	}
 
 }

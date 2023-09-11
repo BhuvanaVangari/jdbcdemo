@@ -9,15 +9,21 @@ import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
+@ToString
+@Entity
 public class Customer {
 
 	public Customer(int customerId, String customerName, String customerContactNumber, String customerAddress,
@@ -31,6 +37,8 @@ public class Customer {
 		this.setCustomerUUID(customerUUID);
 	}
 
+	@Id
+	@Column
 	private int customerId;
 	private String customerName;
 	private String customerContactNumber;
