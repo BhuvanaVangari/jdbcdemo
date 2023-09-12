@@ -59,7 +59,7 @@ public class JdbcdemoApplication {
 		Customer customer;
 
 		try {
-			account2 = new Account("aa124", "Boon", "Salary", 60100, "9036422722", "Hyd", LocalDate.now(),
+			account2 = new Account( "Boon", "Salary", 60100, "9036422722", "Hyd", LocalDate.now(),
 					LocalDate.of(2001, 10, 22), 2);
 
 			customer = new Customer(1, "Bhuvana", "9087654321", "Hydd", "BBBBB5111A", "778899006655");
@@ -69,7 +69,7 @@ public class JdbcdemoApplication {
 			while (true) {
 
 				System.out.println(
-						"Enter your choice\n1)Create account\n2)Get accountby ID\n3)Delete account by ID\n4)Get all accounts\n5)Create Customer\n6)Get customer by ID\\n7)Delete customer by ID\n8)Get all customers\n9)Exit\n");
+						"Enter your choice\n1)Create account\n2)Get accountby ID\n3)Delete account by ID\n4)Get all accounts\n5)Create Customer\n6)Get customer by ID\n7)Delete customer by ID\n8)Get all customers\n9)Exit\n");
 
 				int str = sc.nextInt();
 

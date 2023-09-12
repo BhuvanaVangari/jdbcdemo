@@ -16,6 +16,8 @@ import com.dnb.jdbcdemo.exceptions.InvalidDateException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -32,13 +34,13 @@ import lombok.ToString;
 @Entity
 
 public class Account {
-	public Account(String accountId, String accountHolderName, String accountType, float balance, String contactNumber,
+	public Account( String accountHolderName, String accountType, float balance, String contactNumber,
 			String address, LocalDate accountCreatedDate, LocalDate dob,  int customerId)
 			throws InvalidNameException, InvalidDateException, InvalidAccountIdException, InvalidAccountTypeException,
 			InvalidBalanceException, InvalidContactNumberException, InvalidAddressException,
 			InvalidAccountStatusException {
 		super();
-		this.setAccountId(accountId);
+		//this.setAccountId();
 		this.setAccountHolderName(accountHolderName);
 		this.setAccountType(accountType);
 		this.setBalance(balance);
@@ -50,6 +52,7 @@ public class Account {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private String accountId;
 	@Column(nullable = false)
 	private String accountHolderName;
@@ -63,13 +66,13 @@ public class Account {
 	private boolean accountStatus;
 	private int customerId;
 
-	public void setAccountId(String accountId) throws InvalidAccountIdException {
-		String regex = "^[A-Za-z]{2}[0-9]{3}$";
-		if (Pattern.compile(regex).matcher(accountId).find())
-			this.accountId = accountId;
-		else
-			throw new InvalidAccountIdException("AccountID is not valid");
-	}
+//	public void setAccountId(String accountId) throws InvalidAccountIdException {
+//		String regex = "^[A-Za-z]{2}[0-9]{3}$";
+//		if (Pattern.compile(regex).matcher(accountId).find())
+//			this.accountId = accountId;
+//		else
+//			throw new InvalidAccountIdException("AccountID is not valid");
+//	}
 
 	public void setAccountHolderName(String accountHolderName) throws InvalidNameException {
 		// regex to confirm length should be minimum 2 chars, and should only include
