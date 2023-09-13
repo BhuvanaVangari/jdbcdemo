@@ -59,8 +59,7 @@ public class JdbcdemoApplication {
 		Customer customer;
 
 		try {
-			account2 = new Account( "Boon", "Salary", 60100, "9036422722", "Hyd", LocalDate.now(),
-					LocalDate.of(2001, 10, 22), 2);
+			account2 = new Account();
 
 			customer = new Customer(1, "Bhuvana", "9087654321", "Hydd", "BBBBB5111A", "778899006655");
 			System.out.println(account2);
@@ -76,9 +75,11 @@ public class JdbcdemoApplication {
 				switch (str) {
 
 				case 1:
+					account2.setContactNumber("01");
+					account2.setDob(LocalDate.of(2001, 10, 22));
 
 					accountService.createAccount(account2);
-
+					
 					break;
 
 				case 2: {
