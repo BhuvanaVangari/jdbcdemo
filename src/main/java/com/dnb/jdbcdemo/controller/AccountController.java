@@ -30,7 +30,10 @@ import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidDateException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
+import com.dnb.jdbcdemo.payload.request.AccountRequest;
+import com.dnb.jdbcdemo.repo.AccountRepository;
 import com.dnb.jdbcdemo.service.AccountService;
+import com.dnb.jdbcdemo.utils.RequestToEntityMapper;
 
 import jakarta.validation.Valid;
 
@@ -40,6 +43,8 @@ public class AccountController {
 	
 	@Autowired
 	AccountService accountService;
+	@Autowired
+	RequestToEntityMapper mapper;
 	
 	@DeleteMapping("/{accountId}")
 	public ResponseEntity<?> deleteAccountById(@PathVariable("accountId") String accountId) throws  IdNotFoundException, InvalidAccountIdException{
@@ -96,7 +101,10 @@ public class AccountController {
 	//insert / create acc : post : @PostMapping
 	@PostMapping("/create") //comb of @RequestMapping + post method==>spring v4.3.x
 	
-	public ResponseEntity<?> createAccount(@Valid @RequestBody Account account) {
+	public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequest accountRequest) {
+		
+//		return ResponseEntity.ok(mapper.getAccountEntityObject(accountRequest));
+		Account account=mapper.getAccountEntityObject(accountRequest);
 		//status code : 200 but expected is 201
 		
 		try {

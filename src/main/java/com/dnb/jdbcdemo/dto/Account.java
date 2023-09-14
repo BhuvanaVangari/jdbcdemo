@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 
 import com.dnb.jdbcdemo.exceptions.InvalidDateException;
 import com.dnb.jdbcdemo.utils.CustomAccountIdGenerator;
+import com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,10 +53,9 @@ public class Account {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.UUID)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "account_seq")
-	
 	@GenericGenerator(name = "account_seq", strategy = "com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator",
-	parameters =  {@Parameter(name=CustomAccountIdGenerator.INCREMENT_PARAM,value="50"),
-			@Parameter(name=CustomAccountIdGenerator.NUMBER_FORMAT_PARAMETER,value="%05d")}
+	parameters =  {@Parameter(name=DatePrefixedSequenceIdGenerator.INCREMENT_PARAM,value="50"),
+			@Parameter(name=DatePrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER,value="%05d")}
 //			@Parameter(name=CustomAccountIdGenerator.VALUE_PREFIX_PARAMETER,value="A_")}
 			)
 	private String accountId;

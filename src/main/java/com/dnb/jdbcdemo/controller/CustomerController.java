@@ -24,7 +24,9 @@ import com.dnb.jdbcdemo.exceptions.InvalidAddressException;
 import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
+import com.dnb.jdbcdemo.payload.request.CustomerRequest;
 import com.dnb.jdbcdemo.service.CustomerService;
+import com.dnb.jdbcdemo.utils.RequestToEntityMapper;
 
 import jakarta.validation.Valid;
 
@@ -34,6 +36,8 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
+	@Autowired
+	RequestToEntityMapper mapper;
 	
 	@DeleteMapping("/{customerId}")
 	public ResponseEntity<?> deleteCustomerById(@PathVariable("customerId") int customerId) throws  IdNotFoundException, InvalidCustomerIdException{
@@ -81,8 +85,9 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<?> createCustomer(@Valid @RequestBody Customer customer){
-		Customer customer2=customerService.createCustomer(customer);
-		return new ResponseEntity(customer2,HttpStatus.CREATED);
+	public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerRequest customerRequest){
+		Customer customer2=mapper.getCustomerEntityObject(customerRequest);
+		Customer customer=customerService.createCustomer(customer2);
+		return new ResponseEntity(customer,HttpStatus.CREATED);
 	}
 }
