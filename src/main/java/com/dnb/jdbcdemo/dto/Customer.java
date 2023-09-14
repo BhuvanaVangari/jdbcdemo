@@ -57,7 +57,7 @@ public class Customer {
 	private String customerContactNumber;
 	@NotBlank(message = "Address shouldn't be empty")
 	private String customerAddress;
-	@NotBlank(message = "PAN details should not be empty")
+	@NotBlank(message = "PAN details shouldn't be empty")
 	@jakarta.validation.constraints.Pattern(regexp="^[A-Z]{5}[0-9]{4}[A-Z]{1}$")
 	private String customerPAN;
 	@NotBlank(message = "Contact number should not be empty")
