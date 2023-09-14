@@ -72,6 +72,18 @@ public class AccountServiceImpl implements AccountService {
 		else return false;
 	}
 
+	@Override
+	public Optional<Account> getAccountByContactNumber(String contactNumber) {
+		// TODO Auto-generated method stub
+		return accountRepository.findByContactNumber(contactNumber);
+	}
+
+	@Override
+	public Iterable<Account> getAllAccountsByContactNumber(String contactNumber) {
+		// TODO Auto-generated method stub
+		return accountRepository.findAllByContactNumber(contactNumber);
+	}
+
 	// private static AccountService accountService = null;
 
 //	@Autowired

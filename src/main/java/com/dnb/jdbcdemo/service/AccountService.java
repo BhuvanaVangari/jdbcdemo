@@ -26,6 +26,8 @@ public interface AccountService {
 	
 	public Iterable<Account> getAllAccounts() throws InvalidNameException, InvalidDateException, InvalidAccountIdException, InvalidAccountTypeException, InvalidBalanceException, InvalidContactNumberException, InvalidAddressException, InvalidAccountStatusException;
 
+	public Iterable<Account> getAllAccountsByContactNumber(String contactNumber);
+	
 	public boolean accountExistsById(String accountId);
 	public boolean deleteAccountById(String accountId) throws IdNotFoundException;
 }

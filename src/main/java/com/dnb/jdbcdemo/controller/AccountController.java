@@ -1,6 +1,7 @@
 package com.dnb.jdbcdemo.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dnb.jdbcdemo.dto.Account;
+import com.dnb.jdbcdemo.exceptions.DataNotFoundException;
 import com.dnb.jdbcdemo.exceptions.IdNotFoundException;
 import com.dnb.jdbcdemo.exceptions.InvalidAccountIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidAccountStatusException;
@@ -50,7 +52,29 @@ public class AccountController {
 		}
 	}
 	
-	@GetMapping("/{accountId}")//it should help us get the specific 
+	@GetMapping("/cn/{contactNumber:^[0-9]{10}$}")
+	public ResponseEntity<?>getAccountByContactNumber(@PathVariable("contactNumber")String contactNumber) throws InvalidContactNumberException{
+		Optional<Account> optional=accountService.getAccountByContactNumber(contactNumber);
+		if(optional.isPresent()) {
+			return ResponseEntity.ok(optional.get());
+		}
+		else {
+			throw new InvalidContactNumberException("Contact number is Invalid");
+		}
+	}
+	
+	@GetMapping("/allAccounts/{contactNumber}")
+	public ResponseEntity<?>getAllAccountsByContactNumber(@PathVariable("contactNumber")String contactNumber) throws DataNotFoundException{
+		List<Account>list=(List<Account>) accountService.getAllAccountsByContactNumber(contactNumber);
+		if(list.isEmpty()) {
+			throw new DataNotFoundException("Data not found");
+		}
+		else {
+			return ResponseEntity.ok(list);
+		}
+	}
+	
+	@GetMapping("/ai/{accountId}")//it should help us get the specific acc by accId
 	
 	public ResponseEntity<?> getAccountById(@PathVariable("accountId") String accountId) throws InvalidAccountIdException{
 		Optional<Account> optional=accountService.getAccountById(accountId);

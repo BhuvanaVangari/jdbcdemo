@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Optional<Customer> getCustomerById(int customerId) throws InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
+	public Optional<Customer> getCustomerById(int customerId) {//throws InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
 		// TODO Auto-generated method stub
 		return customerRepository.findById(customerId);
 	}
@@ -41,8 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public boolean deleteCustomerById(int customerId) throws InvalidCustomerIdException, InvalidNameException,
-			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException,IdNotFoundException {
+	public boolean deleteCustomerById(int customerId)throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		if(customerRepository.existsById(customerId)) {
 			customerRepository.deleteById(customerId);
@@ -54,6 +53,25 @@ public class CustomerServiceImpl implements CustomerService {
 		else {
 			throw new IdNotFoundException("ID Not Found");
 		}
+	}
+
+	@Override
+	public boolean customerExistsById(int customerId) {
+		// TODO Auto-generated method stub
+		if(customerRepository.existsById(customerId))return true;
+		else return false;
+	}
+
+	@Override
+	public Optional<Customer> getCustomerByCustomerContactNumber(String customerContactNumber) {
+		// TODO Auto-generated method stub
+		return customerRepository.findByCustomerContactNumber(customerContactNumber);
+	}
+
+	@Override
+	public Iterable<Customer> getAllCustomersByCustomerContactNumber(String customerContactNumber) {
+		// TODO Auto-generated method stub
+		return customerRepository.findAllByCustomerContactNumber(customerContactNumber);
 	}
 
 }
