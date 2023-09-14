@@ -36,9 +36,9 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public Optional<Account> getAccountById(String accountId) throws InvalidNameException, InvalidDateException,
-			InvalidAccountIdException, InvalidAccountTypeException, InvalidBalanceException,
-			InvalidContactNumberException, InvalidAddressException, InvalidAccountStatusException {
+	public Optional<Account> getAccountById(String accountId){// throws InvalidNameException, InvalidDateException,
+//			InvalidAccountIdException, InvalidAccountTypeException, InvalidBalanceException,
+//			InvalidContactNumberException, InvalidAddressException, InvalidAccountStatusException {
 		// TODO Auto-generated method stub
 		return accountRepository.findById(accountId);
 	}
@@ -52,9 +52,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public boolean deleteAccountById(String accountId) throws InvalidAccountIdException, InvalidNameException,
-			InvalidDateException, InvalidAccountTypeException, InvalidBalanceException, InvalidContactNumberException,
-			InvalidAddressException, InvalidAccountStatusException, IdNotFoundException {
+	public boolean deleteAccountById(String accountId) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		if (accountRepository.existsById(accountId)) {
 			accountRepository.deleteById(accountId);
@@ -63,8 +61,15 @@ public class AccountServiceImpl implements AccountService {
 			}
 			return true;
 		} else {
-			throw new IdNotFoundException("Id Not found");
+			throw new IdNotFoundException("AccountId not found");
 		}
+	}
+
+	@Override
+	public boolean accountExistsById(String accountId) {
+		// TODO Auto-generated method stub
+		if (accountRepository.existsById(accountId)) return true;
+		else return false;
 	}
 
 	// private static AccountService accountService = null;

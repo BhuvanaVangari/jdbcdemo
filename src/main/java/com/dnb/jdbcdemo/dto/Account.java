@@ -50,13 +50,12 @@ public class Account {
 //	}
 
 	@Id
-	@NotBlank(message = "account id should not be blank")
 	//@GeneratedValue(strategy = GenerationType.UUID)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "account_seq")
 	
 	@GenericGenerator(name = "account_seq", strategy = "com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator",
-	parameters =  {@Parameter(name=CustomAccountIdGenerator.INCREMENT_PARAM,value="50")}
-//			@Parameter(name=CustomAccountIdGenerator.NUMBER_FORMAT_PARAMETER,value="%05d"),
+	parameters =  {@Parameter(name=CustomAccountIdGenerator.INCREMENT_PARAM,value="50"),
+			@Parameter(name=CustomAccountIdGenerator.NUMBER_FORMAT_PARAMETER,value="%05d")}
 //			@Parameter(name=CustomAccountIdGenerator.VALUE_PREFIX_PARAMETER,value="A_")}
 			)
 	private String accountId;
@@ -160,16 +159,16 @@ public class Account {
 //			throw new InvalidDateException("Date is not valid");
 //
 //	}
+////
+//	public void setDob(LocalDate dob) throws InvalidDateException {
+//		String regex = "^\\d{4}/\\d{2}/\\d{2}$";
+//		String date = dob.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 //
-	public void setDob(LocalDate dob) throws InvalidDateException {
-		String regex = "^\\d{4}/\\d{2}/\\d{2}$";
-		String date = dob.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-
-		if (Pattern.compile(regex).matcher(date).find())
-			this.dob = dob;
-		else
-			throw new InvalidDateException("Date is not valid");
-	}
+//		if (Pattern.compile(regex).matcher(date).find())
+//			this.dob = dob;
+//		else
+//			throw new InvalidDateException("Date is not valid");
+//	}
 //
 //	public void setAccountStatus(boolean accountStatus) throws InvalidAccountStatusException {
 //		String regex = "^(true|false)$";

@@ -30,7 +30,7 @@ public class DatePrefixedSequenceIdGenerator extends SequenceStyleGenerator {
 
 	public static final String NUMBER_FORMAT_PARAMETER = "numberFormat";
 
-	public static final String NUMBER_FORMAT_DEFAULT = "%05d";
+	public static final String NUMBER_FORMAT_DEFAULT = "%d";
 
 	public static final String DATE_NUMBER_SEPARATOR_PARAMETER = "dateNumberSeparator";
 

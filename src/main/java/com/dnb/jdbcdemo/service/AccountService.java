@@ -20,9 +20,12 @@ import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 public interface AccountService {
 	public Account createAccount(Account account) throws IdNotFoundException, InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException;
 	
-	public Optional<Account> getAccountById(String accountId) throws InvalidNameException, InvalidDateException, InvalidAccountIdException, InvalidAccountTypeException, InvalidBalanceException, InvalidContactNumberException, InvalidAddressException, InvalidAccountStatusException;
+	public Optional<Account> getAccountById(String accountId);// throws InvalidNameException, InvalidDateException, InvalidAccountIdException, InvalidAccountTypeException, InvalidBalanceException, InvalidContactNumberException, InvalidAddressException, InvalidAccountStatusException;
+	
+	public Optional<Account> getAccountByContactNumber(String contactNumber);
 	
 	public Iterable<Account> getAllAccounts() throws InvalidNameException, InvalidDateException, InvalidAccountIdException, InvalidAccountTypeException, InvalidBalanceException, InvalidContactNumberException, InvalidAddressException, InvalidAccountStatusException;
 
-	public boolean deleteAccountById(String accountId) throws InvalidAccountIdException, InvalidNameException, InvalidDateException, InvalidAccountTypeException, InvalidBalanceException, InvalidContactNumberException, InvalidAddressException, InvalidAccountStatusException, IdNotFoundException;
+	public boolean accountExistsById(String accountId);
+	public boolean deleteAccountById(String accountId) throws IdNotFoundException;
 }
