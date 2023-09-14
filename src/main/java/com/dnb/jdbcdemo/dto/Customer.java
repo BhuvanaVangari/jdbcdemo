@@ -49,7 +49,7 @@ public class Customer {
 	@Id
 	@GeneratedValue
 	private int customerId;
-	@NotBlank(message = "customer name should not be blank")
+	@NotBlank(message = "customer name shouldn't be blank")
 	private String customerName;
 	@Length(min = 10,max=10)
 	@NotBlank(message = "Contact number should not be empty")
