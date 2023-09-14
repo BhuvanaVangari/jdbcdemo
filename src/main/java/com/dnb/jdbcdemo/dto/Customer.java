@@ -52,7 +52,7 @@ public class Customer {
 	@NotBlank(message = "customer name shouldn't be blank")
 	private String customerName;
 	@Length(min = 10,max=10)
-	@NotBlank(message = "Contact number should not be empty")
+	@NotBlank(message = "Contact number shouldn't be empty")
 	@jakarta.validation.constraints.Pattern(regexp = "^[0-9]{10}$")
 	private String customerContactNumber;
 	@NotBlank(message = "Address should not be empty")
