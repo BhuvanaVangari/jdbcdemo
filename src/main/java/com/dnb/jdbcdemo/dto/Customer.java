@@ -1,5 +1,9 @@
 package com.dnb.jdbcdemo.dto;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.naming.InvalidNameException;
@@ -15,11 +19,14 @@ import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 import com.dnb.jdbcdemo.utils.CustomAccountIdGenerator;
 import com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,6 +70,9 @@ public class Customer {
 	@NotBlank(message = "Contact number should not be empty")
 	@jakarta.validation.constraints.Pattern(regexp="^[0-9]{12}$")
 	private String customerUUID;
+	
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "customer")
+	private Set<Account> accountList=new HashSet<>();
 
 //	public void setCustomerId(int customerId) throws InvalidCustomerIdException {
 //		String regex = "^-?\\d+$";

@@ -17,7 +17,12 @@ public class RequestToEntityMapper {
 		account.setBalance(accountRequest.getBalance());
 		account.setContactNumber(accountRequest.getContactNumber());
 		account.setDob(accountRequest.getDob());
-		account.setCustomerId(accountRequest.getCustomerId());
+		
+		Customer customer= new Customer();
+		customer.setCustomerId(accountRequest.getCustomerId());
+		account.setCustomer(customer);
+		
+		//account.setCustomerId(accountRequest.getCustomerId());
 		return account;
 	}
 	
