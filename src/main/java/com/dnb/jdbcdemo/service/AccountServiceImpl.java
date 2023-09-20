@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dnb.jdbcdemo.dto.Account;
+import com.dnb.jdbcdemo.dto.Customer;
 import com.dnb.jdbcdemo.exceptions.IdNotFoundException;
 import com.dnb.jdbcdemo.exceptions.InvalidAccountIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidAccountStatusException;
@@ -19,6 +20,7 @@ import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidDateException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 import com.dnb.jdbcdemo.repo.AccountRepository;
+import com.dnb.jdbcdemo.repo.CustomerRepository;
 
 @Service("accountServiceImpl")
 public class AccountServiceImpl implements AccountService {
@@ -26,13 +28,26 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 //	@Qualifier
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	@Override
 	public Account createAccount(Account account) throws IdNotFoundException, InvalidNameException,
 			InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
 		// TODO Auto-generated method stub
-		return accountRepository.save(account);
-//		return null;
+		Optional<Customer> customer=customerRepository.findById(account.getCustomer().getCustomerId());
+		
+		if(customer.isPresent()) {
+			account.setCustomer(customer.get());
+			return accountRepository.save(account);
+		}
+		else {
+			customer.orElseThrow(()->new IdNotFoundException("Customer id is not valid"));
+		}
+		
+////		return accountRepository.save(account);
+		return null;
 	}
 
 	@Override

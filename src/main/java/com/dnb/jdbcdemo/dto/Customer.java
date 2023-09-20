@@ -18,6 +18,8 @@ import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 import com.dnb.jdbcdemo.utils.CustomAccountIdGenerator;
 import com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -54,25 +56,27 @@ public class Customer {
 //	}
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int customerId;
-	@NotBlank(message = "customer name shouldn't be blank")
+//	@NotBlank(message = "customer name shouldn't be blank")
 	private String customerName;
-	@Length(min = 10,max=10)
-	@NotBlank(message = "Contact number shouldn't be empty")
-	@jakarta.validation.constraints.Pattern(regexp = "^[0-9]{10}$")
+//	@Length(min = 10,max=10)
+//	@NotBlank(message = "Contact number shouldn't be empty")
+//	@jakarta.validation.constraints.Pattern(regexp = "^[0-9]{10}$")
 	private String customerContactNumber;
-	@NotBlank(message = "Address shouldn't be empty")
+//	@NotBlank(message = "Address shouldn't be empty")
 	private String customerAddress;
-	@NotBlank(message = "PAN details shouldn't be empty")
-	@jakarta.validation.constraints.Pattern(regexp="^[A-Z]{5}[0-9]{4}[A-Z]{1}$")
+//	@NotBlank(message = "PAN details shouldn't be empty")
+//	@jakarta.validation.constraints.Pattern(regexp="^[A-Z]{5}[0-9]{4}[A-Z]{1}$")
 	private String customerPAN;
-	@NotBlank(message = "Contact number should not be empty")
-	@jakarta.validation.constraints.Pattern(regexp="^[0-9]{12}$")
+//	@NotBlank(message = "Contact number should not be empty")
+//	@jakarta.validation.constraints.Pattern(regexp="^[0-9]{12}$")
 	private String customerUUID;
 	
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "customer")
-	private Set<Account> accountList=new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customer")
+	@JsonIgnore//Properties//("account")
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	private List<Account> accountList=new ArrayList<>();
 
 //	public void setCustomerId(int customerId) throws InvalidCustomerIdException {
 //		String regex = "^-?\\d+$";

@@ -11,6 +11,8 @@ import org.hibernate.validator.constraints.Length;
 import com.dnb.jdbcdemo.exceptions.InvalidDateException;
 import com.dnb.jdbcdemo.utils.CustomAccountIdGenerator;
 import com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -55,13 +57,13 @@ public class Account {
 //	}
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.UUID)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "account_seq")
-	@GenericGenerator(name = "account_seq", strategy = "com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator",
-	parameters =  {@Parameter(name=DatePrefixedSequenceIdGenerator.INCREMENT_PARAM,value="50"),
-			@Parameter(name=DatePrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER,value="%05d")}
-//			@Parameter(name=CustomAccountIdGenerator.VALUE_PREFIX_PARAMETER,value="A_")}
-			)
+	@GeneratedValue(strategy = GenerationType.UUID)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "account_seq")
+//	@GenericGenerator(name = "account_seq", strategy = "com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator",
+//	parameters =  {@Parameter(name=DatePrefixedSequenceIdGenerator.INCREMENT_PARAM,value="50")}
+////			@Parameter(name=DatePrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER,value="%05d")}
+////			@Parameter(name=CustomAccountIdGenerator.VALUE_PREFIX_PARAMETER,value="A_")}
+//			)
 	private String accountId;
 	@Column(nullable = false)
 	@NotBlank(message = "account holder name should not be blank")
@@ -81,10 +83,12 @@ public class Account {
 //	@jakarta.validation.constraints.Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$")
 	private LocalDate dob;
 	@Transient
-	private boolean accountStatus;
+	private boolean accountStatus=true;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="customer_id",referencedColumnName="customerId")
+//	@JsonIgnore//Properties//("accountList")'
+	@JsonIgnoreProperties({"application","hibernateLazyInitializer"})
 	private Customer customer;
 
 //	public void setAccountId(String accountId) throws InvalidAccountIdException {
