@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 
@@ -85,10 +87,13 @@ public class Account {
 	@Transient
 	private boolean accountStatus=true;
 	
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@OnDelete(action = OnDeleteAction.SET_NULL)
 	@JoinColumn(name="customer_id",referencedColumnName="customerId")
-//	@JsonIgnore//Properties//("accountList")'
-	@JsonIgnoreProperties({"application","hibernateLazyInitializer"})
+	@JsonIgnore
+//	@JsonIgnoreProperties("accountList")
+//	@JsonIgnoreProperties({"application","hibernateLazyInitializer"})
 	private Customer customer;
 
 //	public void setAccountId(String accountId) throws InvalidAccountIdException {

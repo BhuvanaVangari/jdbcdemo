@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import javax.naming.InvalidNameException;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 
@@ -73,10 +75,12 @@ public class Customer {
 //	@jakarta.validation.constraints.Pattern(regexp="^[0-9]{12}$")
 	private String customerUUID;
 	
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customer")
-	@JsonIgnore//Properties//("account")
-//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-	private List<Account> accountList=new ArrayList<>();
+//	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "customer")
+//	@OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
+//	@OnDelete(action = OnDeleteAction.SET_NULL)
+//    @JsonIgnore//Properties("account")
+////	@JsonIgnoreProperties("customer")
+//	private List<Account> accountList=new ArrayList<>();
 
 //	public void setCustomerId(int customerId) throws InvalidCustomerIdException {
 //		String regex = "^-?\\d+$";
